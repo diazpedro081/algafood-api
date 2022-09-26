@@ -1,7 +1,6 @@
 package br.com.foodworks.foodservice.di.notificacao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import br.com.foodworks.foodservice.di.modelo.Cliente;
