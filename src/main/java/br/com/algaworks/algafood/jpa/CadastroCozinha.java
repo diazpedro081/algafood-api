@@ -1,4 +1,4 @@
-package br.com.foodworks.foodservice.jpa;
+package br.com.algaworks.algafood.jpa;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.foodworks.foodservice.domain.model.Cozinha;
+import br.com.algaworks.algafood.domain.model.Cozinha;
 
 @Component
 public class CadastroCozinha {

@@ -1,4 +1,4 @@
-package br.com.foodworks.foodservice.domain.model;
+package br.com.algaworks.algafood.domain.model;
 
 import java.math.BigDecimal;
 

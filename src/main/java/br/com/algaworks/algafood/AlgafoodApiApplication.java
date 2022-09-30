@@ -1,12 +1,12 @@
-package br.com.foodworks.foodservice;
+package br.com.algaworks.algafood;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FoodserviceApiApplication {
+public class AlgafoodApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FoodserviceApiApplication.class, args);
+        SpringApplication.run(AlgafoodApiApplication.class, args);
     }
 }
