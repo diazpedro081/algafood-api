@@ -1,4 +1,6 @@
-package br.com.algaworks.algafood.jpa.cozinhaservices;
+package br.com.algaworks.algafood.jpa;
+
+import java.util.List;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -8,7 +10,7 @@ import br.com.algaworks.algafood.AlgafoodApiApplication;
 import br.com.algaworks.algafood.domain.model.Cozinha;
 import br.com.algaworks.algafood.domain.repository.CozinhaRepository;
 
-public class BuscaCozinhaMain {
+public class ConsultaCozinhaMain {
 
     public void main(String[] args) {
         ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiApplication.class)
@@ -17,9 +19,11 @@ public class BuscaCozinhaMain {
 
         CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 
-        Cozinha cozinha = cozinhaRepository.buscar(1L);
+        List<Cozinha> cozinhas = cozinhaRepository.listar();
 
-        System.out.println(cozinha.getNome());
+        for (Cozinha cozinha : cozinhas) {
+            System.out.println(cozinha.getNome());
+        }
     }
 
 }

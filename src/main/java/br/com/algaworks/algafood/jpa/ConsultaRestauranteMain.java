@@ -1,6 +1,6 @@
-package br.com.algaworks.algafood.jpa.restauranteservices;
+package br.com.algaworks.algafood.jpa;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,21 +10,21 @@ import br.com.algaworks.algafood.AlgafoodApiApplication;
 import br.com.algaworks.algafood.domain.model.Restaurante;
 import br.com.algaworks.algafood.domain.repository.RestauranteRepository;
 
-public class AlteracaoRestauranteMain {
 
-    public static void main(String[] args) {
+public class ConsultaRestauranteMain {
+
+    public void main(String[] args) {
         ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiApplication.class)
-            .web(WebApplicationType.NONE)
-            .run(args);
+                .web(WebApplicationType.NONE)
+                .run(args);
 
         RestauranteRepository restauranteRepository = applicationContext.getBean(RestauranteRepository.class);
 
-        Restaurante restaurante = new Restaurante();
-        restaurante.setId(1L);
-        restaurante.setNome("Beluga Comedoria");
-        restaurante.setTaxaFrete(new BigDecimal(50.00));
+        List<Restaurante> restaurantes = restauranteRepository.listar();
 
-        restauranteRepository.salvar(restaurante);
-
+        for (Restaurante restaurante : restaurantes) {
+            System.out.printf("%s - %f - %s\n", restaurante.getNome(), restaurante.getTaxaFrete(), restaurante.getCozinha().getNome());
+        }
     }
+
 }
