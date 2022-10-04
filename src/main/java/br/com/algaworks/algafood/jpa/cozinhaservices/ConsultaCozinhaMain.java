@@ -1,4 +1,4 @@
-package br.com.algaworks.algafood.jpa;
+package br.com.algaworks.algafood.jpa.cozinhaservices;
 
 import java.util.List;
 
@@ -17,11 +17,11 @@ public class ConsultaCozinhaMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
 
-        CozinhaRepository cozinhas = applicationContext.getBean(CozinhaRepository.class);
+        CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 
-        List<Cozinha> todasCozinhas = cozinhas.todas();
+        List<Cozinha> cozinhas = cozinhaRepository.listar();
 
-        for (Cozinha cozinha : todasCozinhas) {
+        for (Cozinha cozinha : cozinhas) {
             System.out.println(cozinha.getNome());
         }
     }
