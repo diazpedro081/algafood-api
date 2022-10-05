@@ -6,12 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import org.springframework.stereotype.Component;
-
 import br.com.algaworks.algafood.domain.model.Cidade;
 import br.com.algaworks.algafood.domain.repository.CidadeRepository;
 
-@Component
 public class CidadeRepositoryImpl implements CidadeRepository{
 
     @PersistenceContext
@@ -29,15 +26,15 @@ public class CidadeRepositoryImpl implements CidadeRepository{
 
     @Transactional
     @Override
-    public Cidade salvar(Cidade cidade) {
-        return manager.merge(cidade);
+    public Cidade salvar(Cidade cozinha) {
+        return manager.merge(cozinha);
     }
 
     @Transactional
     @Override
-    public void remover(Cidade cidade) {
-        cidade = buscar(cidade.getId());
-        manager.remove(cidade);
+    public void remover(Cidade cozinha) {
+        cozinha = buscar(cozinha.getId());
+        manager.remove(cozinha);
     }
     
 }

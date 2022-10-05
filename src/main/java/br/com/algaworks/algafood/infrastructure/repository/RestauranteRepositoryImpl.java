@@ -6,12 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import org.springframework.stereotype.Component;
-
 import br.com.algaworks.algafood.domain.model.Restaurante;
 import br.com.algaworks.algafood.domain.repository.RestauranteRepository;
 
-@Component
 public class RestauranteRepositoryImpl implements RestauranteRepository{
     @PersistenceContext
     private EntityManager manager;

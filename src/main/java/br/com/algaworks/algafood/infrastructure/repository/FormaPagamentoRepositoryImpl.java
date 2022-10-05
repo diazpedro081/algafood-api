@@ -6,12 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import org.springframework.stereotype.Component;
-
 import br.com.algaworks.algafood.domain.model.FormaPagamento;
 import br.com.algaworks.algafood.domain.repository.FormaPagamentoRepository;
 
-@Component
 public class FormaPagamentoRepositoryImpl implements FormaPagamentoRepository{
     
     @PersistenceContext
@@ -29,14 +26,14 @@ public class FormaPagamentoRepositoryImpl implements FormaPagamentoRepository{
 
     @Transactional
     @Override
-    public FormaPagamento salvar(FormaPagamento formaPagamneto) {
-        return manager.merge(formaPagamneto);
+    public FormaPagamento salvar(FormaPagamento cozinha) {
+        return manager.merge(cozinha);
     }
 
     @Transactional
     @Override
-    public void remover(FormaPagamento formaPagamneto) {
-        formaPagamneto = buscar(formaPagamneto.getId());
-        manager.remove(formaPagamneto);
+    public void remover(FormaPagamento cozinha) {
+        cozinha = buscar(cozinha.getId());
+        manager.remove(cozinha);
     }
 }
