@@ -21,7 +21,7 @@ public class Restaurante {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String nome;
@@ -29,18 +29,8 @@ public class Restaurante {
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-    @Column(nullable = false)
-    private Boolean ativo;
-    
-    @Column(nullable = false)
-    private Boolean aberto;
-
-   //private DateTime dataCadastro;
-
-    //private DateTime dataAtualizacao;
-
     @ManyToOne
-    @JoinColumn(name = "cozinha_id" , nullable = false)
+    @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
 }
