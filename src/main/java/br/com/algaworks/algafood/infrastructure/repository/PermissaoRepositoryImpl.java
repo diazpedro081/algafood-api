@@ -6,9 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.springframework.stereotype.Component;
+
 import br.com.algaworks.algafood.domain.model.Permissao;
 import br.com.algaworks.algafood.domain.repository.PermissaoRespository;
 
+@Component
 public class PermissaoRepositoryImpl implements PermissaoRespository{
     
     @PersistenceContext
@@ -26,14 +29,14 @@ public class PermissaoRepositoryImpl implements PermissaoRespository{
 
     @Transactional
     @Override
-    public Permissao salvar(Permissao cozinha) {
-        return manager.merge(cozinha);
+    public Permissao salvar(Permissao permissao) {
+        return manager.merge(permissao);
     }
 
     @Transactional
     @Override
-    public void remover(Permissao cozinha) {
-        cozinha = buscar(cozinha.getId());
-        manager.remove(cozinha);
+    public void remover(Permissao permissao) {
+        permissao = buscar(permissao.getId());
+        manager.remove(permissao);
     }
 }
