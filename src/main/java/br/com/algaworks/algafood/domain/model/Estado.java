@@ -14,11 +14,12 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Estado {
 
-    @Id
     @EqualsAndHashCode.Include
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private String nome;
+
 }
