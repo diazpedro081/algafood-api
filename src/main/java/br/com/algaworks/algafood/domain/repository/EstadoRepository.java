@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.algaworks.algafood.domain.model.Estado;
 
+
 public interface EstadoRepository {
     
     List<Estado> listar();

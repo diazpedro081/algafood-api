@@ -29,7 +29,7 @@ public class CadastroCidadeSerivice {
 
         cidade.setEstado(estado);
 
-        return cidadeRepository.salvar(cidade);
+        return cidadeRepository.save(cidade);
     }
 
 }
