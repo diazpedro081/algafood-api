@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import br.com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import br.com.algaworks.algafood.domain.model.Estado;
 import br.com.algaworks.algafood.domain.repository.EstadoRepository;
 
 @Service
@@ -15,9 +16,13 @@ public class CadastroEstadoService {
     @Autowired
     private EstadoRepository estadoRepository;
 
+    public Estado salvar(Estado estado) {
+		return estadoRepository.save(estado);
+	}
+
     public void excluir(Long estadoId) {
         try {
-            estadoRepository.remover(estadoId);
+            estadoRepository.deleteById(estadoId);
         } catch (EmptyResultDataAccessException e) {
             throw new EntidadeNaoEncontradaException(
                     String.format("Não existe um cadastro de Estado com código: %d", estadoId));

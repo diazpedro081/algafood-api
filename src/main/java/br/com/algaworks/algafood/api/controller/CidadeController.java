@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import br.com.algaworks.algafood.domain.model.Cidade;
 import br.com.algaworks.algafood.domain.repository.CidadeRepository;
-import br.com.algaworks.algafood.domain.service.CadastroCidadeSerivice;
+import br.com.algaworks.algafood.domain.service.CadastroCidadeService;
 
 @RestController
 @RequestMapping("/cidades")
@@ -28,7 +28,7 @@ public class CidadeController {
     private CidadeRepository cidadeRepository;
 
     @Autowired
-    private CadastroCidadeSerivice cadastroCidade;
+    private CadastroCidadeService cadastroCidade;
 
     @GetMapping
     public List<Cidade> listar() {
