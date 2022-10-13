@@ -1,11 +1,10 @@
 package br.com.algaworks.algafood.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.algaworks.algafood.domain.model.Permissao;
 
 @Repository
-public interface PermissaoRespository extends JpaRepository<Permissao, Long>{
+public interface PermissaoRespository extends CustomJpaRepository<Permissao, Long>{
 
 }

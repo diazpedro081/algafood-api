@@ -58,7 +58,7 @@ public class CozinhaController {
 
     @PutMapping("/{cozinhaId}")
     public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha) {
-        Optional <Cozinha> cozinhaAtual = cozinhaRepository.findById(cozinhaId);
+        Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(cozinhaId);
 
         if (cozinhaAtual.isPresent()) {
             BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
@@ -82,6 +82,11 @@ public class CozinhaController {
         } catch (EntidadeEmUsoException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+    }
+
+    @GetMapping("/primeira")
+    public Optional<Cozinha> cozinhaPrimeiro() {
+        return cozinhaRepository.buscarPrimeiro();
     }
 
 }
