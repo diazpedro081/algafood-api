@@ -13,14 +13,16 @@ import br.com.algaworks.algafood.domain.model.Restaurante;
 @Repository
 public interface RestauranteRepository
         extends CustomJpaRepository<Restaurante, Long>,
-             RestauranteRepositoryQueries, 
-             JpaSpecificationExecutor<Restaurante> {
+        RestauranteRepositoryQueries,
+        JpaSpecificationExecutor<Restaurante> {
 
     List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
     List<Restaurante> consultarPorNome(String nome, @Param("id") Long cozinha);
 
-    Optional<Restaurante> findTop2ByNomeContaining(String nome);
+    Optional<Restaurante> findFirstRestauranteByNomeContaining(String nome);
+
+    List<Restaurante> findTop2ByNomeContaining(String nome);
 
     int countByCozinhaId(Long cozinha);
 
