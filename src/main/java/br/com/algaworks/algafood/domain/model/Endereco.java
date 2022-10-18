@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @Embeddable
 public class Endereco {
-    
+
     @Column(name = "endereco_cep")
     private String cep;
 
@@ -27,7 +27,7 @@ public class Endereco {
     private String bairro;
 
     @ManyToOne
-    @JoinColumn(name = "enderenco_cidade_id")
+    @JoinColumn(name = "endereco_cidade_id")
     private Cidade cidade;
 
 }
