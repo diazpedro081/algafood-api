@@ -18,8 +18,8 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Produto {
 
-    @EqualsAndHashCode.Include
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
