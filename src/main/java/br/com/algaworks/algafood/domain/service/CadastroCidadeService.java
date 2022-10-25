@@ -10,7 +10,6 @@ import br.com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException
 import br.com.algaworks.algafood.domain.model.Cidade;
 import br.com.algaworks.algafood.domain.model.Estado;
 import br.com.algaworks.algafood.domain.repository.CidadeRepository;
-import br.com.algaworks.algafood.domain.repository.EstadoRepository;
 
 @Service
 public class CadastroCidadeService {
@@ -23,14 +22,12 @@ public class CadastroCidadeService {
 	private CidadeRepository cidadeRepository;
 
 	@Autowired
-	private EstadoRepository estadoRepository;
+	private CadastroEstadoService cadastroEstado;
 
 	public Cidade salvar(Cidade cidade) {
 		Long estadoId = cidade.getEstado().getId();
 
-		Estado estado = estadoRepository.findById(estadoId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
-						String.format("Não existe cadastro de estado com código %d", estadoId)));
+		Estado estado = cadastroEstado.buscarOuFalhar(estadoId);
 
 		cidade.setEstado(estado);
 
