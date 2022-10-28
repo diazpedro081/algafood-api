@@ -36,7 +36,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                         EntidadeEmUsoException ex, WebRequest request) {
 
                 HttpStatus status = HttpStatus.CONFLICT;
-                ProblemType problemType = ProblemType.ENTIDADE_NAO_ENCONTRADA;
+                ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
                 String detail = ex.getMessage();
 
                 Problem problem = createProblemBuilder(status, problemType, detail).build();
@@ -50,7 +50,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                         NegocioException ex, WebRequest request) {
 
                 HttpStatus status = HttpStatus.BAD_REQUEST;
-                ProblemType problemType = ProblemType.ENTIDADE_NAO_ENCONTRADA;
+                ProblemType problemType = ProblemType.ERRO_NEGOCIO;
                 String detail = ex.getMessage();
 
                 Problem problem = createProblemBuilder(status, problemType, detail).build();
