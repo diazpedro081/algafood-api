@@ -25,16 +25,38 @@ import br.com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import br.com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import br.com.algaworks.algafood.domain.exception.NegocioException;
 
+// "Ocorreu um erro interno inesperado no sistema, Tente novamente e se o " 
+// = "Problema persistir, entre em contato com o administrador do sistema."
+
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+
+        @Override
+        protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body,
+                        HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+                if (body == null) {
+                        body = Problem.builder()
+                                        .title(status.getReasonPhrase())
+                                        .status(status.value())
+                                        .build();
+                } else if (body instanceof String) {
+                        body = Problem.builder()
+                                        .title((String) body)
+                                        .status(status.value())
+                                        .build();
+                }
+
+                return super.handleExceptionInternal(ex, body, headers, status, request);
+        }
 
         @Override
         protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
                         HttpStatus status, WebRequest request) {
 
                 ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADA;
-                String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.", 
-                ex.getRequestURL());
+                String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.",
+                                ex.getRequestURL());
 
                 Problem problem = createProblemBuilder(status, problemType, detail).build();
 
@@ -126,6 +148,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 return path;
         }
 
+        private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
+                return Problem.builder()
+                                .status(status.value())
+                                .type(problemType.getUri())
+                                .title(problemType.getTitle())
+                                .detail(detail);
+        }
+
         @ExceptionHandler(EntidadeNaoEncontradaException.class)
         public ResponseEntity<?> handleEntidadeNaoEncontradaException(
                         EntidadeNaoEncontradaException ex, WebRequest request) {
@@ -169,31 +199,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                                 ex, problem, new HttpHeaders(), status, request);
         }
 
-        @Override
-        protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body,
-                        HttpHeaders headers, HttpStatus status, WebRequest request) {
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
+                HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+                ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
+                String detail = "Ocorreu um erro interno inesperado no sistema. "
+                                + "Tente novamente e se o problema persistir, entre em contato "
+                                + "com o administrador do sistema.";
 
-                if (body == null) {
-                        body = Problem.builder()
-                                        .title(status.getReasonPhrase())
-                                        .status(status.value())
-                                        .build();
-                } else if (body instanceof String) {
-                        body = Problem.builder()
-                                        .title((String) body)
-                                        .status(status.value())
-                                        .build();
-                }
+                ex.printStackTrace();
 
-                return super.handleExceptionInternal(ex, body, headers, status, request);
-        }
+                Problem problem = createProblemBuilder(status, problemType, detail).build();
 
-        private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
-                return Problem.builder()
-                                .status(status.value())
-                                .type(problemType.getUri())
-                                .title(problemType.getTitle())
-                                .detail(detail);
+                return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
         }
 
 }
