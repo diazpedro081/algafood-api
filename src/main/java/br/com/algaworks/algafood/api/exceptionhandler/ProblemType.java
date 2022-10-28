@@ -9,8 +9,8 @@ public enum ProblemType {
 
     MENSAGEM_INCOMPREENSIVEL("/mensagem-incopreensivel", "Mensagem inconpreensivel"),
     
-    ENTIDADE_NAO_ENCONTRADA("/entidade-nao-encontrada", 
-    "Entidade não encontrada"),
+    RECURSO_NAO_ENCONTRADA("/recurso-nao-encontrada", 
+    "Recurso não encontrada"),
 
     ENTIDADE_EM_USO("/entidade-em-uso", 
     "Entidade em uso"),
