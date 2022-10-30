@@ -47,14 +47,13 @@ public class CidadeController {
 		try {
 			return cadastroCidade.salvar(cidade);
 		} catch (EstadoNaoEncontradoException e) {
-			throw new NegocioException(e.getMessage());
+			throw new NegocioException(e.getMessage(), e);
 		}
 	}
 
 	@PutMapping("/{cidadeId}")
 	public Cidade atualizar(@PathVariable Long cidadeId,
 			@RequestBody Cidade cidade) {
-
 		try {
 			Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
 
