@@ -1,8 +1,9 @@
 package br.com.algaworks.algafood.domain.model;
 
 public enum StatusPedido {
-    CRIADO,
-    CONFIRMADO,
-    ENTREGUE,
-    CANCELADO
+
+	CRIADO,
+	CONFIRMADO,
+	ENTREGUE,
+	CANCELADO
 }
