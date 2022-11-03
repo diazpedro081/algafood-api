@@ -5,8 +5,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import br.com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import br.com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
+import br.com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import br.com.algaworks.algafood.domain.model.Cidade;
 import br.com.algaworks.algafood.domain.model.Estado;
 import br.com.algaworks.algafood.domain.repository.CidadeRepository;

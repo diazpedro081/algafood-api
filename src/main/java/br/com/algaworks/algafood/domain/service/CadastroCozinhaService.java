@@ -5,16 +5,15 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import br.com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import br.com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
+import br.com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import br.com.algaworks.algafood.domain.model.Cozinha;
 import br.com.algaworks.algafood.domain.repository.CozinhaRepository;
 
 @Service
 public class CadastroCozinhaService {
 
-	private static final String MSG_COZINHA_EM_USO = 
-	"Cozinha de código %d não pode ser removida, pois está em uso";
+	private static final String MSG_COZINHA_EM_USO = "Cozinha de código %d não pode ser removida, pois está em uso";
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
