@@ -44,7 +44,7 @@ public class Restaurante {
 	@Column(nullable = false)
 	private String nome;
 	
-	@PositiveOrZero
+	@PositiveOrZero(groups = Groups.CadastroRestaurante.class)
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
