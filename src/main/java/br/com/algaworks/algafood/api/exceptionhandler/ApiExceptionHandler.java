@@ -49,7 +49,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    
 	    BindingResult bindingResult = ex.getBindingResult();
 	    
-	    List<Problem.Object> problemFields = bindingResult.getAllErrors().stream()
+	    List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream()
 	    		.map(objectError -> {
 	    			String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
 
@@ -68,7 +68,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    
 	    Problem problem = createProblemBuilder(status, problemType, detail)
 	        .userMessage(detail)
-	        .object(problemFields)
+	        .object(problemObjects)
 	        .build();
 	    
 	    return handleExceptionInternal(ex, problem, headers, status, request);
