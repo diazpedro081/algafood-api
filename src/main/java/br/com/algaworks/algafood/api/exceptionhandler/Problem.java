@@ -20,14 +20,15 @@ public class Problem {
 	private String title;
 	private String detail;
 	private String userMessage;
-	private List<Object> object;
-
+	private List<Object> objects;
+	
 	@Getter
 	@Builder
 	public static class Object {
-
+		
 		private String name;
 		private String userMessage;
+		
 	}
-
+	
 }
