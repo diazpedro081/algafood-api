@@ -26,6 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.algaworks.algafood.core.validation.ValidacaoException;
 import br.com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import br.com.algaworks.algafood.domain.exception.NegocioException;
@@ -33,49 +37,47 @@ import br.com.algaworks.algafood.domain.model.Restaurante;
 import br.com.algaworks.algafood.domain.repository.RestauranteRepository;
 import br.com.algaworks.algafood.domain.service.CadastroRestauranteService;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @RestController
 @RequestMapping(value = "/restaurantes")
 public class RestauranteController {
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-
+	
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
-
+	
 	@Autowired
-	private SmartValidator validator; 
-
+	private SmartValidator validator;
+	
 	@GetMapping
 	public List<Restaurante> listar() {
 		return restauranteRepository.findAll();
 	}
-
+	
 	@GetMapping("/{restauranteId}")
 	public Restaurante buscar(@PathVariable Long restauranteId) {
 		return cadastroRestaurante.buscarOuFalhar(restauranteId);
 	}
-
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {
+
 		try {
 			return cadastroRestaurante.salvar(restaurante);
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-
+	
 	@PutMapping("/{restauranteId}")
-	public Restaurante atualizar(@PathVariable @Valid Long restauranteId,
-			@RequestBody Restaurante restaurante) {
+	public Restaurante atualizar(@PathVariable Long restauranteId,
+			@RequestBody @Valid Restaurante restaurante) {
 		try {
 			Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
-
-			BeanUtils.copyProperties(restaurante, restauranteAtual,
+			
+			BeanUtils.copyProperties(restaurante, restauranteAtual, 
 					"id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 
 			return cadastroRestaurante.salvar(restauranteAtual);
@@ -83,45 +85,44 @@ public class RestauranteController {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-
+	
 	@PatchMapping("/{restauranteId}")
 	public Restaurante atualizarParcial(@PathVariable Long restauranteId,
 			@RequestBody Map<String, Object> campos, HttpServletRequest request) {
 		Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
-
+		
 		merge(campos, restauranteAtual, request);
 		validate(restauranteAtual, "restaurante");
-
+		
 		return atualizar(restauranteId, restauranteAtual);
 	}
-  
+
 	private void validate(Restaurante restaurante, String objectName) {
-		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName );
-
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
 		validator.validate(restaurante, bindingResult);
-
-		 if (bindingResult.hasErrors()) {
+		
+		if (bindingResult.hasErrors()) {
 			throw new ValidacaoException(bindingResult);
-		 }
+		}
 	}
 
 	private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino,
 			HttpServletRequest request) {
 		ServletServerHttpRequest serverHttpRequest = new ServletServerHttpRequest(request);
-
+		
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-
+			
 			Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class);
-
+			
 			dadosOrigem.forEach((nomePropriedade, valorPropriedade) -> {
 				Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
 				field.setAccessible(true);
-
+				
 				Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
-
+				
 				ReflectionUtils.setField(field, restauranteDestino, novoValor);
 			});
 		} catch (IllegalArgumentException e) {
@@ -129,5 +130,5 @@ public class RestauranteController {
 			throw new HttpMessageNotReadableException(e.getMessage(), rootCause, serverHttpRequest);
 		}
 	}
-
+	
 }
