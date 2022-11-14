@@ -23,12 +23,14 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
-import br.com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
-import br.com.algaworks.algafood.domain.exception.NegocioException;
+
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+
+import br.com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
+import br.com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import br.com.algaworks.algafood.domain.exception.NegocioException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -52,10 +54,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream()
 	    		.map(objectError -> {
 	    			String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
-
-					String name = objectError.getObjectName();
-
-					if (objectError instanceof FieldError) {
+	    			
+	    			String name = objectError.getObjectName();
+	    			
+	    			if (objectError instanceof FieldError) {
 	    				name = ((FieldError) objectError).getField();
 	    			}
 	    			
@@ -68,7 +70,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    
 	    Problem problem = createProblemBuilder(status, problemType, detail)
 	        .userMessage(detail)
-	        .object(problemObjects)
+	        .objects(problemObjects)
 	        .build();
 	    
 	    return handleExceptionInternal(ex, problem, headers, status, request);
