@@ -106,6 +106,7 @@ public class RestauranteController {
 		}
 	}
 
+	
 	private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino,
 			HttpServletRequest request) {
 		ServletServerHttpRequest serverHttpRequest = new ServletServerHttpRequest(request);
