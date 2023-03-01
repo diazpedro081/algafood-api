@@ -8,9 +8,15 @@ import com.algaworks.algafood.di.notificacao.NotificadorEmail;
 @Component
 public class AtivacaoClienteService {
 
+    private NotificadorEmail notificador;
+
+    public AtivacaoClienteService(NotificadorEmail notificador) {
+        this.notificador = notificador;
+    }
+
     public void ativar(Cliente cliente) {
         cliente.ativar();
-        NotificadorEmail notificador = new NotificadorEmail();
+
         notificador.notificar(cliente, "Seu cadastro esta ativo!");
     }
 }
