@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.di.modelo.Cliente;
 
-@Component // Aqui informamos que essa classe é um componente do Spring
+// @Component  Aqui informamos que essa classe é um componente do Spring
 public class NotificadorEmail implements Notificador {
 
     private boolean caixaAlta;
