@@ -1,29 +1,27 @@
 package com.algaworks.algafood.di.service;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.di.modelo.Cliente;
-import com.algaworks.algafood.di.notificacao.NotificadorEmail;
+import com.algaworks.algafood.di.notificacao.Notificador;
 
 @Component
 public class AtivacaoClienteService {
 
-    private NotificadorEmail notificador;
-
-    @Autowired // define o construtor primario
-    public AtivacaoClienteService(NotificadorEmail notificador) {
-        this.notificador = notificador;
-    }
-
-    public AtivacaoClienteService(String qualquer) {
-        System.out.println("Qualquer coisa '-'");
-    }
+    /*
+     * Assim esta sendo informado que não temos uma dependencia obrigatoria
+     */
+    @Autowired(required = false)
+    private List<Notificador> notificadores;
 
     public void ativar(Cliente cliente) {
         cliente.ativar();
 
-        notificador.notificar(cliente, "Seu cadastro esta ativo!");
+        for(Notificador notificador : notificadores) {
+            notificador.notificar(cliente, "Seu cadastro esta ativo!");
+        }
     }
 }
